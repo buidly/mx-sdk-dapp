@@ -9,6 +9,7 @@ import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { IDappProvider } from 'types';
 import { WalletConnectV2Provider } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { emptyProvider } from './utils';
+import { BuidlyExtensionProvider } from './buidlyExtensionProvider';
 
 export type ProvidersType =
   | IDappProvider
@@ -20,7 +21,8 @@ export type ProvidersType =
   | IframeProvider
   | HWProvider
   | OperaProvider
-  | WalletConnectV2Provider;
+  | WalletConnectV2Provider
+  | BuidlyExtensionProvider;
 
 let accountProvider: ProvidersType = emptyProvider;
 
