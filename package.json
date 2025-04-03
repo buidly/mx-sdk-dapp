@@ -1,8 +1,8 @@
 {
-  "name": "@multiversx/sdk-dapp",
-  "version": "4.0.0",
+  "name": "buidly-sdk-dapp",
+  "version": "4.0.5",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
-  "author": "MultiversX",
+  "author": "buidly",
   "license": "GPL-3.0-or-later",
   "repository": "multiversx/mx-sdk-dapp",
   "main": "./__commonjs",

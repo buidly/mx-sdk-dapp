@@ -19,6 +19,7 @@ export async function signTransactions({
   customTransactionInformation,
   transactionsDisplayInfo
 }: SignTransactionsPropsType): Promise<SendTransactionReturnType> {
+  console.log("sdk: signTransactions", transactions);
   const appState = store.getState();
   const sessionId = Date.now().toString();
   const storeChainId = chainIDSelector(appState);
@@ -30,6 +31,7 @@ export async function signTransactions({
   const hasValidChainId = transactionsPayload?.every(
     (tx) => tx.getChainID().valueOf() === storeChainId.valueOf()
   );
+  console.log("sdk: hasValidChainId", { appState, sessionId, storeChainId, transactionsPayload, hasValidChainId });
   if (!hasValidChainId) {
     const notificationPayload = {
       type: NotificationTypesEnum.warning,
@@ -64,6 +66,7 @@ export async function signTransactions({
       };
     })
   };
+  console.log("sdk: dispatching signTransactionsPayload", signTransactionsPayload);
   store.dispatch(setSignTransactionsCancelMessage(null));
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
   store.dispatch(

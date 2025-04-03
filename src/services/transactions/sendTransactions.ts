@@ -21,15 +21,16 @@ export async function sendTransactions({
   hasConsentPopup
 }: SendTransactionsPropsType): Promise<SendTransactionReturnType> {
   try {
+    console.log('sdk:sendTransactions', transactions);
     const transactionsPayload = Array.isArray(transactions)
       ? transactions
       : [transactions];
-
+    console.log('sdk: transactionsPayload', transactionsPayload);
     const transactionsToSign = await transformTransactionsToSign({
       transactions: transactionsPayload as SimpleTransactionType[],
       minGasLimit
     });
-
+    console.log('sdk: transactionsToSign', transactionsToSign);
     return signTransactions({
       transactions: transactionsToSign as Transaction[],
       minGasLimit,

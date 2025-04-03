@@ -128,16 +128,19 @@ export class BuidlyExtensionProvider {
     }
 
     async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
+        console.log("sdk: signTransactions", transactions);
         this.ensureConnected();
 
         const signTransactionsFeature = this.getWalletFeature(BuidlyWalletFeature.SIGN_TRANSACTIONS) as any;
+        console.log("sdk: signTransactionsFeature", signTransactionsFeature);
         const extensionResponse = await signTransactionsFeature.signTransactions({
             from: this.account.address,
             transactions: transactions.map((transaction) => transaction.toPlainObject()),
         });
 
         try {
-            const transactionsResponse = extensionResponse.map((transaction: IPlainTransactionObject) => Transaction.newFromPlainObject(transaction));
+            const transactionsResponse = extensionResponse.map((transaction: IPlainTransactionObject) => Transaction.fromPlainObject(transaction));
+            console.log("sdk: transactionsResponse", transactionsResponse);
             return transactionsResponse;
         } catch (error: any) {
             throw new Error(`Transaction canceled: ${error.message}.`);

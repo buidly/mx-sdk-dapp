@@ -18,6 +18,7 @@ import {
   ScreenType,
   SignPropsType
 } from './types/signTransactionsModals.types';
+import { SignWithBuidlyExtensionModal } from './SignWithBuidlyExtensionModal';
 
 export interface SignTransactionsModalsPropsType {
   className?: string;
@@ -45,6 +46,8 @@ export const SignTransactionsModals = ({
     Opera: CustomConfirmScreens?.Opera ?? SignWithOperaModal,
     CrossWindow:
       CustomConfirmScreens?.CrossWindow ?? SignWithCrossWindowWalletModal,
+    BuidlyExtension:
+      CustomConfirmScreens?.BuidlyExtension ?? SignWithBuidlyExtensionModal,
     // The purpose of having this is to have a consistent flow of transaction signing.
     // The logic for redirecting to the web wallet is placed in the ConfirmationScreen component,
     // so we have to render that component when we are logged in with the web wallet provider
@@ -88,6 +91,8 @@ export const SignTransactionsModals = ({
       return renderScreen({ Screen: ConfirmScreens.Iframe });
     case LoginMethodsEnum.wallet:
       return renderScreen({ Screen: ConfirmScreens.Wallet });
+    case LoginMethodsEnum.buidlyExtension:
+      return renderScreen({ Screen: ConfirmScreens.BuidlyExtension });
     case LoginMethodsEnum.extra:
       return renderScreen({ Screen: ConfirmScreens.Extra, isDevice: true });
     default:

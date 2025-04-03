@@ -17,13 +17,17 @@ export function parseTransactionAfterSigning(
 
   const transactionComputer = new TransactionComputer();
 
+  const hashRaw = transactionComputer.computeTransactionHash(transaction);
+  const hash = Buffer.from(hashRaw).toString('hex');
+
   const parsedTransaction: SignedTransactionType = {
     ...transaction.toPlainObject(),
-    hash: transactionComputer.computeTransactionHash(transaction),
+    hash,
     senderUsername: transaction.senderUsername,
     receiverUsername: transaction.receiverUsername,
     status: TransactionServerStatusesEnum.pending
   };
+  console.log("sdk: parsedTransaction", { transaction, parsedTransaction });
 
   // TODO: Remove when the protocol supports usernames for guardian transactions
   if (isGuardianTx({ data: parsedTransaction.data, onlySetGuardian: true })) {
