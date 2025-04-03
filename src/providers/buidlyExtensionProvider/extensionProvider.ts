@@ -1,5 +1,5 @@
 import { Address, IPlainTransactionObject, Message, Transaction } from "@multiversx/sdk-core";
-import { ErrAccountNotConnected, ErrCannotSignSingleTransaction } from "./errors";
+import { ErrAccountNotConnected, ErrCannotSignSingleTransaction, ErrWalletFeatureNotImplemented } from "./errors";
 
 declare global {
     interface Window {
@@ -10,6 +10,14 @@ declare global {
 export interface IProviderAccount {
     address: string;
     signature?: string;
+}
+
+enum BuidlyWalletFeature {
+    CONNECT = 'buidly:connect',
+    DISCONNECT = 'buidly:disconnect',
+    SIGN_PERSONAL_MESSAGE = 'buidly:signPersonalMessage',
+    SIGN_TRANSACTIONS = 'buidly:signTransactions',
+    CANCEL_ACTION = 'buidly:cancelAction',
 }
 
 export class BuidlyExtensionProvider {
@@ -51,7 +59,11 @@ export class BuidlyExtensionProvider {
         }
         const { token } = options;
         const data = token ? token : "";
-        await this.startBgrMsgChannel('Operation.Connect', data);
+
+        const connectFeature = this.getWalletFeature(BuidlyWalletFeature.CONNECT) as any;
+        const { address, signature } = await connectFeature.connect(data);
+
+        this.account = { address, signature };
         return this.account;
     }
 
@@ -60,7 +72,8 @@ export class BuidlyExtensionProvider {
             throw new Error("Extension provider is not initialised, call init() first");
         }
         try {
-            await this.startBgrMsgChannel('Operation.Logout', this.account.address);
+            const disconnectFeature = this.getWalletFeature(BuidlyWalletFeature.DISCONNECT) as any;
+            await disconnectFeature.disconnect();
             this.disconnect();
         } catch (error) {
             console.warn("Extension origin url is already cleared!", error);
@@ -117,7 +130,8 @@ export class BuidlyExtensionProvider {
     async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
         this.ensureConnected();
 
-        const extensionResponse = await this.startBgrMsgChannel('Operation.SignTransactions', {
+        const signTransactionsFeature = this.getWalletFeature(BuidlyWalletFeature.SIGN_TRANSACTIONS) as any;
+        const extensionResponse = await signTransactionsFeature.signTransactions({
             from: this.account.address,
             transactions: transactions.map((transaction) => transaction.toPlainObject()),
         });
@@ -137,7 +151,8 @@ export class BuidlyExtensionProvider {
             account: this.account.address,
             message: Buffer.from(messageToSign.data).toString(),
         };
-        const extensionResponse = await this.startBgrMsgChannel('Operation.SignMessage', data);
+        const signMessageFeature = this.getWalletFeature(BuidlyWalletFeature.SIGN_PERSONAL_MESSAGE) as any;
+        const extensionResponse = await signMessageFeature.signPersonalMessage(data);
         const signatureHex = extensionResponse.signature;
         const signature = Buffer.from(signatureHex, "hex");
 
@@ -151,10 +166,15 @@ export class BuidlyExtensionProvider {
     }
 
     cancelAction() {
-        return this.startBgrMsgChannel('Operation.CancelAction', {});
+        const cancelActionFeature = this.getWalletFeature(BuidlyWalletFeature.CANCEL_ACTION) as any;
+        cancelActionFeature.cancelAction().catch(() => { });
     }
 
-    private startBgrMsgChannel(_operation: string, _connectData: any): Promise<any> {
-        throw new Error("Not implemented yet!");
+    private getWalletFeature(featureName: string): unknown {
+        const wallet = window.buidlyWallet as any;
+        if (!(featureName in wallet.features)) {
+            throw new ErrWalletFeatureNotImplemented(featureName);
+        }
+        return wallet.features[featureName];
     }
 }

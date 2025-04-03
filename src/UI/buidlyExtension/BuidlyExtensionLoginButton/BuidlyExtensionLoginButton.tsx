@@ -1,15 +1,13 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import {
-  CHROME_EXTENSION_LINK,
+  BUIDLY_CHROME_EXTENSION_LINK,
   DataTestIdsEnum,
-  FIREFOX_ADDON_LINK
 } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useBuidlyExtensionLogin } from 'hooks/login/useBuidlyExtensionLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
-import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { getIsBuidlyExtensionAvailable } from '../helpers';
@@ -46,7 +44,8 @@ const BuidlyExtensionLoginButtonComponent: (
       nativeAuth
     });
     const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
-    const isFirefox = isWindowAvailable() && navigator.userAgent.indexOf('Firefox') != -1;
+    // const isFirefox = isWindowAvailable() && navigator.userAgent.indexOf('Firefox') != -1;
+    // TODO: disable on firefox
     const classes = {
       wrapper: classNames(
         globalStyles?.btn,
@@ -71,7 +70,7 @@ const BuidlyExtensionLoginButtonComponent: (
     return !getIsBuidlyExtensionAvailable() ? (
       <a
         rel='noreferrer'
-        href={isFirefox ? FIREFOX_ADDON_LINK : CHROME_EXTENSION_LINK}
+        href={BUIDLY_CHROME_EXTENSION_LINK}
         target='_blank'
         className={classes.wrapper}
       >

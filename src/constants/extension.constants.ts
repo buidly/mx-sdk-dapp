@@ -9,3 +9,6 @@ export const FIREFOX_METAMASK_ADDON_LINK =
 
 export const CHROME_METAMASK_EXTENSION_LINK =
   'https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en';
+
+export const BUIDLY_CHROME_EXTENSION_LINK =
+  'https://chromewebstore.google.com/detail/buidly-extension/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en';

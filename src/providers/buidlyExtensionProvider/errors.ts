@@ -21,3 +21,9 @@ export class ErrAccountNotConnected extends Err {
         super("Account is not connected.");
     }
 }
+
+export class ErrWalletFeatureNotImplemented extends Err {
+    public constructor(featureName: string) {
+        super(`Wallet feature ${featureName} is not implemented.`);
+    }
+}
