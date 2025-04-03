@@ -252,6 +252,7 @@ The exported buttons are:
 - WalletConnectLoginButton
 - LedgerLoginButton
 - WebWalletLoginButton
+- BuidlyExtensionLoginButton
 
 example:
 
@@ -1190,7 +1191,8 @@ import {
   UsdValue,
   WalletConnectLoginButton,
   WalletConnectLoginContainer,
-  WebWalletLoginButton
+  WebWalletLoginButton,
+  BuidlyExtensionLoginButton
 } from '@multiversx/sdk-dapp/UI';
 ```
 

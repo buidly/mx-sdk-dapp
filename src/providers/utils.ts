@@ -16,6 +16,7 @@ import {
   WalletConnectV2Provider,
   EngineTypes
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
+import { BuidlyExtensionProvider } from './buidlyExtensionProvider';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
@@ -41,6 +42,8 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.crossWindow;
     case IframeProvider:
       return LoginMethodsEnum.iframe;
+    case BuidlyExtensionProvider:
+      return LoginMethodsEnum.buidlyExtension;
     case EmptyProvider:
       return LoginMethodsEnum.none;
     default:

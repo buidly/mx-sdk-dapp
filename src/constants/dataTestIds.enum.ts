@@ -15,6 +15,7 @@ export enum DataTestIdsEnum {
   deleteToastButton = 'deleteToastButton',
   errorScreen = 'errorScreen',
   extensionLoginButton = 'extensionLoginButton',
+  buidlyExtensionLoginButton = 'buidlyExtensionLoginButton',
   iframeLoginButton = 'iframeLoginButton',
   formatAmountComponent = 'formatAmountComponent',
   formatAmountDecimals = 'formatAmountDecimals',

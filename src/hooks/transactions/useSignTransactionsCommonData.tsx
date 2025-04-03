@@ -22,6 +22,7 @@ import {
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
 import { useSetTransactionNonces } from './helpers';
+import { BuidlyExtensionProvider } from 'providers/buidlyExtensionProvider';
 
 export const useSignTransactionsCommonData = () => {
   const dispatch = useDispatch();
@@ -76,6 +77,7 @@ export const useSignTransactionsCommonData = () => {
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperimentalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
+    const isBuidlyExtensionProvider = provider instanceof BuidlyExtensionProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
@@ -85,7 +87,8 @@ export const useSignTransactionsCommonData = () => {
       !isCrossWindowProvider &&
       !isIframeProvider &&
       !isPasskeyProvider &&
-      !isMetamaskProvider
+      !isMetamaskProvider &&
+      !isBuidlyExtensionProvider
     ) {
       return;
     }
@@ -115,6 +118,10 @@ export const useSignTransactionsCommonData = () => {
     if (isExperimentalWebviewProvider) {
       ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
     }
+
+    if (isBuidlyExtensionProvider) {
+      BuidlyExtensionProvider.getInstance()?.cancelAction?.();
+    }
   }
 
   return {
@@ -126,9 +133,9 @@ export const useSignTransactionsCommonData = () => {
     hasTransactions,
     transactionsToSign: transactionsToSign
       ? {
-          ...transactionsToSign,
-          transactions
-        }
+        ...transactionsToSign,
+        transactions
+      }
       : transactionsToSign
   };
 };

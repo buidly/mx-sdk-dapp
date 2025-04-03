@@ -7,3 +7,4 @@ export * from './getModifiedLoginToken';
 export * from './getMetamaskProvider';
 export * from './getPasskeyProvider';
 export * from './handleGuardianWarning';
+export * from './getBuidlyExtensionProvider';

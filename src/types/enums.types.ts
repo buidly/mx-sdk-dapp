@@ -42,6 +42,7 @@ export enum LoginMethodsEnum {
   metamask = 'metamask',
   opera = 'opera',
   extra = 'extra',
+  buidlyExtension = 'buidlyExtension',
   none = ''
 }
 

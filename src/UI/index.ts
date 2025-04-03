@@ -34,3 +34,4 @@ export * from './ScamPhishingAlert';
 export * from './TimeAgo';
 export * from './metamask/MetamaskLoginButton';
 export * from './iframe/IframeLoginButton';
+export * from './buidlyExtension/BuidlyExtensionLoginButton';

@@ -56,6 +56,7 @@ import {
   checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
+import { BuidlyExtensionProvider } from 'providers/buidlyExtensionProvider';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
@@ -103,6 +104,7 @@ export const useSignTransactions = () => {
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperiementalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
+    const isBuidlyExtensionProvider = provider instanceof BuidlyExtensionProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
@@ -114,7 +116,8 @@ export const useSignTransactions = () => {
       !isCrossWindowProvider &&
       !isIframeProvider &&
       !isPasskeyProvider &&
-      !isMetamaskProvider
+      !isMetamaskProvider &&
+      !isBuidlyExtensionProvider
     ) {
       return;
     }
@@ -138,6 +141,9 @@ export const useSignTransactions = () => {
     }
     if (isExperiementalWebviewProvider) {
       ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
+    }
+    if (isBuidlyExtensionProvider) {
+      BuidlyExtensionProvider.getInstance()?.cancelAction?.();
     }
   };
 
@@ -239,13 +245,13 @@ export const useSignTransactions = () => {
         (await provider.signTransactions(
           isGuarded && allowGuardian
             ? transactions?.map((transaction) => {
-                transaction.version =
-                  TransactionVersion.withTxOptions().valueOf();
-                transaction.options = TransactionOptions.withOptions({
-                  guarded: true
-                }).valueOf();
-                return transaction;
-              })
+              transaction.version =
+                TransactionVersion.withTxOptions().valueOf();
+              transaction.options = TransactionOptions.withOptions({
+                guarded: true
+              }).valueOf();
+              return transaction;
+            })
             : transactions
         )) ?? [];
 

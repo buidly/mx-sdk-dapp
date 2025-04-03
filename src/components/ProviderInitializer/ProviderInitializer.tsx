@@ -64,7 +64,8 @@ import {
   processModifiedAccount,
   getMetamaskProvider,
   getIframeProvider,
-  handleGuardianWarning
+  handleGuardianWarning,
+  getBuidlyExtensionProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -320,6 +321,14 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setBuidlyExtensionProvider() {
+    const address = await getAddress();
+    const provider = await getBuidlyExtensionProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
   async function setPasskeyProvider() {
     const address = await getAddress();
     const provider = await getPasskeyProvider(address);
@@ -432,6 +441,11 @@ export function ProviderInitializer() {
 
       case LoginMethodsEnum.extra: {
         setExternalProviderAsAccountProvider();
+        break;
+      }
+
+      case LoginMethodsEnum.buidlyExtension: {
+        setBuidlyExtensionProvider();
         break;
       }
 

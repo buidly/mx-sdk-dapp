@@ -10,6 +10,7 @@ import { PasskeyLoginButton } from 'UI/passkey/PasskeyLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 import { redirect } from 'utils/window';
+import { BuidlyExtensionLoginButton } from 'UI/buidlyExtension/BuidlyExtensionLoginButton';
 
 // TODO: Rename to "UnlockPagePropsType" when sdk-dapp@3.0.0
 export interface Props {
@@ -25,6 +26,7 @@ export interface Props {
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   WalletConnectV2LoginButtonText?: string;
+  BuidlyExtensionLoginButtonText?: string;
   description?: string | ReactNode;
 }
 
@@ -40,6 +42,7 @@ const UnlockPageComponent = ({
   OperaWalletLoginButtonText = 'Opera Crypto Wallet',
   IframeLoginButtonText = 'Embeded web wallet',
   WebWalletLoginButtonText = 'Web wallet',
+  BuidlyExtensionLoginButtonText = 'Buidly Extension',
   globalStyles,
   styles
 }: Props & WithStylesImportType) => {
@@ -89,6 +92,11 @@ const UnlockPageComponent = ({
             <ExtensionLoginButton
               callbackRoute={loginRoute}
               loginButtonText={ExtensionLoginButtonText}
+            />
+
+            <BuidlyExtensionLoginButton
+              callbackRoute={loginRoute}
+              loginButtonText={BuidlyExtensionLoginButtonText}
             />
 
             <PasskeyLoginButton

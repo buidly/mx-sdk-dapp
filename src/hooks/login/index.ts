@@ -8,3 +8,4 @@ export { useXaliasLogin } from './useXaliasLogin';
 export { useWalletConnectV2Login } from './useWalletConnectV2Login';
 export { useMetamaskLogin } from './useMetamaskLogin';
 export { usePasskeyLogin } from './usePasskeyLogin';
+export { useBuidlyExtensionLogin } from './useBuidlyExtensionLogin';

@@ -13,7 +13,7 @@ import { logoutAction } from 'reduxStore/commonActions';
 import * as actions from 'reduxStore/slices/loginInfoSlice';
 import { store } from 'reduxStore/store';
 import { sleep } from 'utils/asyncActions';
-import { ExtensionLoginButton } from '../';
+import { BuidlyExtensionLoginButton } from '../';
 import { checkIsLoggedInStore } from './helpers';
 
 jest.mock('reduxStore/slices/loginInfoSlice', () => {
@@ -56,7 +56,7 @@ const tokenLoginWithSignature = {
     'ZXJkMWRtOXV4cGY1YXdrbjd1aGp1N3pqbjlsZGUwZGhhaHkwcWF4cXFsdTI2eGN1dXcyN3FxcnNxZm1lajM.YUhSMGNEb3ZMMnh2WTJGc2FHOXpkQS5mZmY2N2QzMTQ3NmFkOTIwZDUzMDkzYTNhNGMyMTc4ZTE5ODE3OWIzNTY1NmVlZWZhNDE5MTA3ZmE3MThiNzgwLjg2NDAwLmV5SjBhVzFsYzNSaGJYQWlPakUyT1RBeE9EUXpNVE45.e4c98dd01020118b13db9dd5db9e5b56ff0c4a0141306918a9d3eea964a21ada5d566f58cdf6c921ed3405bf5685d1e87545dbcc86ea3c27a43aa3abee8c2b0e'
 };
 
-describe('ExtensionLoginButton tests', () => {
+describe('BuidlyExtensionLoginButton tests', () => {
   beforeEach(() => {
     store.dispatch(logoutAction());
     mockWindowLocation();
@@ -68,10 +68,10 @@ describe('ExtensionLoginButton tests', () => {
 
   it('should perform simple login and redirect', async () => {
     const methods = renderWithProvider({
-      children: <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} />
+      children: <BuidlyExtensionLoginButton callbackRoute={CALLBACK_ROUTE} />
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
+    const loginButton = await methods.findByTestId('buidlyExtensionLoginButton');
 
     fireEvent.click(loginButton);
 
@@ -84,10 +84,10 @@ describe('ExtensionLoginButton tests', () => {
 
   it('should perform login and redirect to URL', async () => {
     const methods = renderWithProvider({
-      children: <ExtensionLoginButton callbackRoute='https://multivers.com' />
+      children: <BuidlyExtensionLoginButton callbackRoute='https://multivers.com' />
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
+    const loginButton = await methods.findByTestId('buidlyExtensionLoginButton');
 
     fireEvent.click(loginButton);
 
@@ -105,14 +105,14 @@ describe('ExtensionLoginButton tests', () => {
 
     const methods = renderWithProvider({
       children: (
-        <ExtensionLoginButton
+        <BuidlyExtensionLoginButton
           callbackRoute={CALLBACK_ROUTE}
           onLoginRedirect={onLoginRedirect}
         />
       )
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
+    const loginButton = await methods.findByTestId('buidlyExtensionLoginButton');
 
     fireEvent.click(loginButton);
 
@@ -131,11 +131,11 @@ describe('ExtensionLoginButton tests', () => {
   it('extension should perform login with nativeAuth', async () => {
     const methods = renderWithProvider({
       children: (
-        <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
+        <BuidlyExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
       )
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
+    const loginButton = await methods.findByTestId('buidlyExtensionLoginButton');
     const setTokenLoginSpy = jest.spyOn(actions, 'setTokenLogin');
     jest.spyOn(Date, 'now').mockReturnValue(1690184313013); // 2023-07-24T11:00
     fireEvent.click(loginButton);
@@ -166,11 +166,11 @@ describe('ExtensionLoginButton tests', () => {
 
     const methods = renderWithProvider({
       children: (
-        <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
+        <BuidlyExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
       )
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
+    const loginButton = await methods.findByTestId('buidlyExtensionLoginButton');
 
     fireEvent.click(loginButton);
 
@@ -179,5 +179,3 @@ describe('ExtensionLoginButton tests', () => {
     });
   });
 });
-
-// TODO: add buidly extension login tests
